@@ -3,6 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Minesweeper", "Minesweeper\Minesweeper.fsproj", "{74105949-22DB-468B-9B86-D92250E51672}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Minesweeper.Tests", "Minesweeper.Tests\Minesweeper.Tests.fsproj", "{15F7E045-8055-445E-84B1-D8702876E292}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9CABB297-DCE3-4CC1-AD8C-FD51C54BBA8C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +22,10 @@ Global
 		{74105949-22DB-468B-9B86-D92250E51672}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74105949-22DB-468B-9B86-D92250E51672}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74105949-22DB-468B-9B86-D92250E51672}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F7E045-8055-445E-84B1-D8702876E292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F7E045-8055-445E-84B1-D8702876E292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F7E045-8055-445E-84B1-D8702876E292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F7E045-8055-445E-84B1-D8702876E292}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

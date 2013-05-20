@@ -1,5 +1,6 @@
 ﻿open System.IO
 open Board
+open Utils
 
 type Square = Bomb | Clear              //inpur board square type
 type AdjSquare = Bomb | Adj of int      //output board square type with number of adjacent bombs
@@ -59,27 +60,36 @@ let displayRow row = Array.map displaySquare row |> (fun chars -> new System.Str
 //formats an entire output board as a string, with a header row and each row on its own line
 let displayField (num: int) board =
     let sb = new System.Text.StringBuilder()
-    sb.AppendLine(sprintf "Field #%d" num) |> ignore
-    let boardLines = Board.mapRows displayRow board |> Seq.iter(fun line -> sb.AppendLine(line) |> ignore)
+    sb.AppendLine(sprintf "Field #%d:" num) |> ignore
+    let boardLines = Board.mapRows displayRow board
+    let boardStr = System.String.Join(System.Environment.NewLine, boardLines)
+    sb.Append(boardStr) |> ignore
     sb.ToString()
 
 //writes a list of formatted field strings to a text writer, separated by empty lines
 let rec writeFieldsTo (tr: System.IO.TextWriter) = function
 | [] -> ()
-| [last: string] -> tr.Write(last)
+| [last: string] -> 
+    tr.Write(last)
 | (str::strs) ->
     tr.Write(str)
     tr.WriteLine()
+    tr.WriteLine()
     writeFieldsTo tr strs
+
+let readAndWrite (reader: System.IO.TextReader) (writer: System.IO.TextWriter) =
+    let fileLines = readLines reader
+    let boards = readAll fileLines
+    let outLines = boards |> Seq.map (fun (n, board) -> displayField n (mapAdjacancies board)) |> List.ofSeq
+    writeFieldsTo writer outLines
+    writer.Flush()
 
 [<EntryPoint>]
 let main argv = 
     match argv with
     | [| path |] ->
-        let fileLines = System.IO.File.ReadAllLines path
-        let boards = readAll fileLines
-        let outLines = boards |> Seq.map (fun (n, board) -> displayField n (mapAdjacancies board)) |> List.ofSeq
-        writeFieldsTo System.Console.Out outLines
+        use reader = new System.IO.StreamReader(path)
+        readAndWrite reader System.Console.Out
         0
     | _ -> 
         printf "Usage: Minesweeper file\n"

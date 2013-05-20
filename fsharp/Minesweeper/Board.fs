@@ -25,7 +25,7 @@ let getNeighbours<'T> (board: Board<'T>) (row: int<r>) (col: int<c>) =
         for ro in [-1; 0; 1] do
             for co in [-1; 0; 1] do
                 let (r, c) = ((int row) + ro, (int col) + co)
-                if r >= 0 && r < height && c >= 0 && c < width then yield (r * 1<r>, c * 1<c>)
+                if (ro, co) <> (0, 0) && r >= 0 && r < height && c >= 0 && c < width then yield (r * 1<r>, c * 1<c>)
     }
 
 //get the value at the given position
