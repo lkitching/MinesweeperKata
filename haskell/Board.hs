@@ -26,3 +26,12 @@ getRow :: Row -> Board a -> [a]
 getRow r (Board { width = (Width w), squares = boardSquares }) =
   catMaybes $ map (\coord -> M.lookup coord boardSquares) $ map (\c -> (r, Col c)) [0..(w-1)]
   
+getNeighbours :: Row -> Col -> Board a -> [a]
+getNeighbours (Row r) (Col c) board@(Board { squares = squares }) = catMaybes $ map (\(row, col) -> get row col board) nSquares
+  where nSquares = [(Row (r + ro), Col (c + co)) | ro <- [-1,0,1], co <- [-1,0,1], (ro, co) /= (0, 0)]
+        
+mapi :: Board a -> (Row -> Col -> a -> b) -> Board b
+mapi (Board { width = w, height = h, squares = squares }) f =
+  Board { width = w, height = h, squares = mappedSquares }
+ where mappedSquares = M.mapWithKey (uncurry f) squares
+  
