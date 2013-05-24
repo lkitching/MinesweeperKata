@@ -3,8 +3,8 @@ module Parser where
 import Data.List
 import Data.Char
 import Board
+import Squares
 
-data Mine = Clear | Bomb deriving (Eq, Show)
 
 parseMine :: Char -> Mine
 parseMine '*' = Bomb
@@ -25,5 +25,6 @@ parseBoard (h:' ':w:hs) =
 parseBoard _ = error "Invalid board - expected [height width data]"
 
 parseBoards :: String -> [Board Mine]
-parseBoards = unfoldr parseBoard . filter (not . isSpace)
+parseBoards = unfoldr parseBoard . filter (not . isNewlineChar)
+  where isNewlineChar c = c `elem` ['\n', '\r']
 

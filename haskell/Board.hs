@@ -13,6 +13,10 @@ data Board a = Board { width :: Width,
                        squares :: M.Map (Row, Col) a
                      }
                
+instance Show a => Show (Board a) where
+  show (Board { width = (Width w), height = (Height h), squares = squares }) = unlines $ map showRow [0..(h-1)]
+    where showRow r = concat $ map (show . fromJust . (flip M.lookup $ squares)) [(Row r, Col c) | c <- [0..(h-1)]]
+          
 initRowWise :: Width -> Height -> [a] -> Board a
 initRowWise width@(Width w) height@(Height h) boardData =
   let boardSquares = foldl (\m (c, v) -> M.insert c v m) M.empty $ zip coords boardData
