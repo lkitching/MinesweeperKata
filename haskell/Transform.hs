@@ -14,10 +14,12 @@ transform :: Board Mine -> Board Adj
 transform board = mapi board mapSquare
   where mapSquare r c s = transformSquare s $ getNeighbours r c board
         
+formatBoard :: Int -> Board Adj -> String
+formatBoard num board = unlines ["Field #" ++ show num ++ ":", show board]
+        
 boardStrings :: [Board Adj] -> [String]
-boardStrings = snd . foldr (\b (n, acc) -> (n+1, (formatBoard n b):acc)) (1, [])
-  where formatBoard num board = unlines ["Field #" ++ show num ++ ":", show board]
+boardStrings = reverse . snd . foldl (\(n, acc) b -> (n+1, (formatBoard n b):acc)) (1, [])
         
 formatBoards :: [Board Adj] -> String
-formatBoards = intercalate "\n\n" . boardStrings
+formatBoards = intercalate "\n" . boardStrings
    
